@@ -18,7 +18,7 @@ const PATTERNS = gql`
 export default function Homepage() {
   const { loading, error, data } = useQuery(PATTERNS)
 
-  if (loading) return <p>Loading ...</p>
+  if (loading) return <p>Loading...</p>
   if (error) return <p>Error: {error.message}</p>
 
   console.log(data)

@@ -11,6 +11,7 @@ import SiteHeader from './components/SiteHeader'
 import NotFound from './pages/NotFound'
 import Login from './pages/Login'
 import Logout from './pages/Logout'
+import { Protector } from './helpers'
 
 //apollo client
 const client = new ApolloClient({
@@ -22,27 +23,27 @@ function App() {
   const location = useLocation();
   
   return (
-      <ApolloProvider client={client}>
-        <SiteHeader />
-        <div className="App">
-          {location.pathname === '/' && (
-            <div className='side-menu'>
-              Filtra i pattern per le tue esigenze
-            </div>
-          )}
-          <div className={`pattern-list ${location.pathname === '/' ? 'home' : ''}`}>
-            <Routes>
-              <Route exact path="/" element={<Homepage />} />
-              <Route path="/dettagli/:id" element={<DettagliPattern />} />
-              <Route path="/amministratore" element={<ViewAmministratore />} />
-              <Route path="/responsabile" element={<ViewResponsabile />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/logout" element={<Logout />} />
-              <Route path="*" element={<NotFound />} />
-            </Routes>
+    <ApolloProvider client={client}>
+      <SiteHeader />
+      <div className="App">
+        {location.pathname === '/' && (
+          <div className='side-menu'>
+            Filtra i pattern per le tue esigenze
           </div>
+        )}
+        <div className={`pattern-list ${location.pathname === '/' ? 'home' : ''}`}>
+          <Routes>
+            <Route exact path="/" element={<Homepage />} />
+            <Route path="/dettagli/:id" element={<DettagliPattern />} />
+            <Route path="/amministratore" element={<Protector Component={ViewAmministratore} />} />
+            <Route path="/responsabile" element={<Protector Component={ViewResponsabile} />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/logout" element={<Logout />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
         </div>
-      </ApolloProvider>
+      </div>
+    </ApolloProvider>
   );
 }
 

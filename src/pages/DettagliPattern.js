@@ -76,35 +76,35 @@ const PATTERN = gql`
 `
 
 function splitExamples(text) {
-    if (text === "NA") return ["No examples"]
+  if (text === "NA") return ["No examples"]
 
-    // Divide il testo in base alle occorrenze di 'Example'
-    let examples = text.split('Example')
-    
-    // Rimuovi il primo elemento dell'array che è una stringa vuota
-    examples.shift()
-    
-    // Aggiungi 'Example' all'inizio di ogni elemento dell'array
-    examples = examples.map(example => 'Example ' + example.trim())
-    
-    return examples
+  // Divide il testo in base alle occorrenze di 'Example'
+  let examples = text.split('Example')
+  
+  // Rimuovi il primo elemento dell'array che è una stringa vuota
+  examples.shift()
+  
+  // Aggiungi 'Example' all'inizio di ogni elemento dell'array
+  examples = examples.map(example => 'Example ' + example.trim())
+  
+  return examples
 }
 
 export default function DettagliPattern() {
-    const { id } = useParams();
-    const { data, error, loading } = useQuery(PATTERN,
-      { variables: {id: id} 
-    })
+  const { id } = useParams();
+  const { data, error, loading } = useQuery(PATTERN,
+    { variables: {id: id} 
+  })
 
-    if (loading) return <p>Loading...</p>
-    if (error) return <p>Error: {error.message}</p>
+  if (loading) return <p>Loading...</p>
+  if (error) return <p>Error: {error.message}</p>
 
-    console.log(data)
-    
-    let pattern = data.pattern.data.attributes
-    let esempi = splitExamples(pattern.esempio)
+  console.log(data)
+  
+  let pattern = data.pattern.data.attributes
+  let esempi = splitExamples(pattern.esempio)
 
-    console.log(esempi)
+  console.log(esempi)
 
   return (
     <PatternSingolo id={id} pattern={pattern} esempi={esempi} />
