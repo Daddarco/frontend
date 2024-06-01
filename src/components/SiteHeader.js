@@ -8,7 +8,7 @@ export default function SiteHeader() {
 
   useEffect(() => {
     const user = userData();
-    console.log(user)
+    //console.log(user)
     
     if (user && user.jwt && user.role) {
       setIsAuth(true);

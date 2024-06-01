@@ -12,6 +12,7 @@ import NotFound from './pages/NotFound'
 import Login from './pages/Login'
 import Logout from './pages/Logout'
 import { Protector } from './helpers'
+import Filtri from './View/Filtri'
 
 //apollo client
 const client = new ApolloClient({
@@ -28,7 +29,7 @@ function App() {
       <div className="App">
         {location.pathname === '/' && (
           <div className='side-menu'>
-            Filtra i pattern per le tue esigenze
+            <Filtri />
           </div>
         )}
         <div className={`pattern-list ${location.pathname === '/' ? 'home' : ''}`}>
