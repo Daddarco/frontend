@@ -4,69 +4,8 @@ import useFetch from '../hooks/useFetch';
 
 export default function Filtri() {
   const { data, error, loading } = useFetch('http://localhost:1337/api/patterns?populate=*');
-  /*
-  const [uniqueFields, setUniqueFields] = useState({});
 
   //console.log(data);
-
-  useEffect(() => {
-    if (data) {
-      const uniqueFieldsMap = new Map();
-
-      // per ogni pattern
-      data.forEach(item => {
-        // per ogni sezione del pattern
-        Object.keys(item.attributes).forEach(field => {
-          // se nella mappa non c'è già la sezione, la aggiunge
-          if (!uniqueFieldsMap.has(field)) {
-            uniqueFieldsMap.set(field, new Set());
-          }
-
-          const fieldValue = item.attributes[field];
-          //console.log(fieldValue.data);
-
-          // se la sezione è un oggetto e la sezione non è nulla
-          if (typeof fieldValue === 'object' && fieldValue !== null) {
-            // per ogni sottosezione della sezione
-            Object.keys(fieldValue.data).forEach(subField => {
-              //console.log(subField.attributes[0]);
-              uniqueFieldsMap.get(field).add(subField.attributes.nome);
-            });
-          } else {
-            uniqueFieldsMap.get(field).add(fieldValue);
-          }
-        });
-      });
-
-      const uniqueFieldsObj = {};
-      uniqueFieldsMap.forEach((value, key) => {
-        uniqueFieldsObj[key] = Array.from(value);
-      });
-
-      setUniqueFields(uniqueFieldsObj);
-    }
-  }, [data]);
-  
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error.message}</p>;
-  
-  console.log(uniqueFields);
-  
-  return (
-    <div>
-    <h1>Filtra i pattern per le tue esigenze</h1>
-    {Object.keys(uniqueFields).map(field => (
-      <Accordion key={field} title={field}>
-      <ul>
-      {uniqueFields[field].map((value, index) => (
-        <li key={index}>{value}</li>
-      ))}
-      </ul>
-      </Accordion>
-    ))}
-    </div>
-  );
-  */
   
   const [uniqueFields, setUniqueFields] = useState({});
 
@@ -111,11 +50,12 @@ export default function Filtri() {
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error.message}</p>;
 
-  console.log(uniqueFields);
+  //console.log(uniqueFields);
 
   return (
     <div>
       Filtra i pattern per le tue esigenze
+      <Accordion items={uniqueFields} keepOthersOpen={true} />
     </div>
   );
 }
