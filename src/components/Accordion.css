@@ -111,3 +111,7 @@
   z-index: 1;
   position: relative;
 }
+
+.container {
+  display: flex;
+}

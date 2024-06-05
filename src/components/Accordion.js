@@ -1,21 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import './Accordion.css';
+import PatternList from '../View/PatternList';
 
 const Accordion = ({ items, keepOthersOpen }) => {
   const [accordionItems, setAccordionItems] = useState(null);
+  const [filtri, setFiltri] = useState([]);
 
   useEffect(() => {
     if (items) {
-      const storedCheckedItems = JSON.parse(localStorage.getItem('checkedItems')) || [];
-      setAccordionItems(items.map(item => {
-        const storedItem = storedCheckedItems.find(storedItem => storedItem.label === item.label);
-        const checkedItems = storedItem ? storedItem.checkedItems : [];
-        return {
-          ...item,
-          toggled: false,
-          checkedItems: item.campi.map(campo => checkedItems.includes(campo))
-        };
-      }));
+      setAccordionItems(items.map(item => ({
+        ...item,
+        toggled: false,
+        checkedItems: new Array(item.campi.length).fill(false) // Inizializza lo stato delle checkbox
+      })));
     }
   }, [items]);
 
@@ -37,71 +34,81 @@ const Accordion = ({ items, keepOthersOpen }) => {
   };
 
   const handleCheckboxChange = (itemId, index) => {
-    const updatedAccordionItems = accordionItems.map((item) => {
+    setAccordionItems(accordionItems.map((item) => {
       if (item.id === itemId) {
         const checkedItems = [...item.checkedItems];
         checkedItems[index] = !checkedItems[index];
+
+        // Aggiorna i filtri
+        const updatedFiltri = filtri.filter(filtro => filtro.label !== item.label);
+        const selectedFields = checkedItems.reduce((acc, isChecked, i) => {
+          if (isChecked) {
+            acc.push(item.campi[i]);
+          }
+          return acc;
+        }, []);
+
+        if (selectedFields.length > 0) {
+          updatedFiltri.push({
+            label: item.label,
+            checkedItems: selectedFields
+          });
+        }
+
+        setFiltri(updatedFiltri);
+
         return {
           ...item,
           checkedItems
         };
       }
       return item;
-    });
-
-    setAccordionItems(updatedAccordionItems);
-    updateLocalStorage(updatedAccordionItems);
+    }));
   };
 
-  const updateLocalStorage = (updatedAccordionItems) => {
-    const checkedItemsToStore = updatedAccordionItems
-      .map(item => ({
-        label: item.label,
-        checkedItems: item.campi.filter((campo, index) => item.checkedItems[index])
-      }))
-      .filter(item => item.checkedItems.length > 0);
-
-    if (checkedItemsToStore.length > 0) {
-      localStorage.setItem('checkedItems', JSON.stringify(checkedItemsToStore));
-    } else {
-      localStorage.removeItem('checkedItems');
-    }
-  };
+  console.log('accordionItems:', accordionItems);
+  console.log('filtri:', filtri);
 
   return (
-    <div className='accordion-parent'>
-      {accordionItems?.map((listItem, key) => (
-        <div className={`accordion ${listItem.toggled ? 'toggled' : ''}`} key={key}>
-          <button className='toggle' onClick={() => handleAccordionToggle(listItem)}>
-            <p>{listItem.label}</p>
-            <div className='direction-indicator'>{listItem.toggled ? '-' : '+'}</div>
-          </button>
-          <div className='content-parent'>
-            <div className='content'>
-              {listItem.toggled && (
-                <div>
-                  {listItem.campi.map((campo, index) => (
-                    <div key={index}>
-                      <input
-                        type="checkbox"
-                        id={`${campo}-${index}`}
-                        name={campo}
-                        value={campo}
-                        checked={listItem.checkedItems[index]}
-                        onChange={() => handleCheckboxChange(listItem.id, index)}
-                        className="custom-checkbox"
-                      />
-                      <label htmlFor={`${campo}-${index}`} className="custom-checkbox-label">
-                        <span>{campo}</span>
-                      </label>
+    <div className='container'>
+      <div className='side-menu'>
+        Filtra i pattern per le tue esigenze
+        <div className='accordion-parent'>
+          {accordionItems?.map((listItem, key) => (
+            <div className={`accordion ${listItem.toggled ? 'toggled' : ''}`} key={key}>
+              <button className='toggle' onClick={() => handleAccordionToggle(listItem)}>
+                <p>{listItem.label}</p>
+                <div className='direction-indicator'>{listItem.toggled ? '-' : '+'}</div>
+              </button>
+              <div className='content-parent'>
+                <div className='content'>
+                  {listItem.toggled && (
+                    <div>
+                      {listItem.campi.map((campo, index) => (
+                        <div key={index}>
+                          <input
+                            type="checkbox"
+                            id={`${campo}-${index}`}
+                            name={campo}
+                            value={campo}
+                            checked={listItem.checkedItems[index]}
+                            onChange={() => handleCheckboxChange(listItem.id, index)}
+                            className="custom-checkbox"
+                          />
+                          <label htmlFor={`${campo}-${index}`} className="custom-checkbox-label">
+                            <span>{campo}</span>
+                          </label>
+                        </div>
+                      ))}
                     </div>
-                  ))}
+                  )}
                 </div>
-              )}
+              </div>
             </div>
-          </div>
+          ))}
         </div>
-      ))}
+      </div>
+      <PatternList filtri={filtri} />
     </div>
   );
 };

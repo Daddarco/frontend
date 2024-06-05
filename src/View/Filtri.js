@@ -89,7 +89,6 @@ export default function Filtri() {
 
   return (
     <div>
-      Filtra i pattern per le tue esigenze
       <Accordion items={data} keepOthersOpen={true} />
     </div>
   );
