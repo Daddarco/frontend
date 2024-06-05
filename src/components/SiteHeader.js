@@ -21,19 +21,19 @@ export default function SiteHeader() {
       <div className="site-title">
         <Link reloadDocument to="/"><h1>POSD System</h1></Link>
       </div>
-      <div className='login-button'>
+      <div className='auth-buttons'>
         {isAuth ? (
-          <div>
+          <>
             <Link to={role === 'amministratore' ? "/amministratore" : "/responsabile"}>
-              <button>Area Riseravata</button>
+              <button className='area-riservata'>Area Riservata</button>
             </Link>
             <Link to={"/logout"}>
-              <button>Logout</button>
+              <button className='logout-button'>Logout</button>
             </Link>
-          </div>
+          </>
         ) : (
           <Link to={"/login"}>
-            <button>Login</button>
+            <button className='login-button'>Login</button>
           </Link>
         )}
       </div>

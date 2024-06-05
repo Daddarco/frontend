@@ -80,6 +80,6 @@ export default function Login() {
   }
 
   return (
-      <LoginForm message={message} login={login} />
+    <LoginForm message={message} login={login} />
   )
 }

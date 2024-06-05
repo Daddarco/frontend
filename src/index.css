@@ -1,14 +1,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
- 
+
 body {
   margin: 0 30px;
   font-family: "Poppins";
   background: #f1f1f1;
 }
-h1,h2,h3,h4 {
+
+h1, h2, h3, h4 {
   font-weight: 400;
   font-weight: bold;
 }
+
 .App {
   display: flex;
   justify-content: space-between;
@@ -16,11 +18,12 @@ h1,h2,h3,h4 {
   font-size: 1.2em;
   padding: 20px;
 }
+
 a {
   text-decoration: none;
   color: #2354dc;
 }
- 
+
 /* header */
 .site-header {
   display: flex;
@@ -30,44 +33,57 @@ a {
   background-color: #f1f1f1;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
+
 .site-title h1 {
   font-size: 1.5em;
   color: #8e2ad6;
   padding-bottom: 10px;
   border-bottom: 2px solid;
 }
-.login-button {
-  width: 120px;
-  height: 40px;
+
+.auth-buttons {
   display: flex;
-  justify-content: center;
-  align-items: center;
+  gap: 10px; /* Aggiunge uno spazio tra i bottoni */
 }
- 
-.login-button button {
-  width: 120px;
+
+
+.auth-buttons .area-riservata {
+  width: 140px;
   height: 40px;
-  margin: 10px;
+  margin: 0; /* Rimuove margine per evitare sovrapposizioni */
   border-radius: 20px;
   border: none;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
   font-size: 1em;
   color: white;
   background-color: #8e2ad6;
-  transition: background-color 0.3s, color 0.3s, transform 0.3s; /* aggiunge una transizione per l'animazione */
+  transition: background-color 0.3s, color 0.3s, transform 0.3s;
 }
- 
- 
- 
-.login-button button:hover {
+
+.auth-buttons .login-button,
+.auth-buttons .logout-button{
+  width: 100px;
+  height: 40px;
+  margin: 0; /* Rimuove margine per evitare sovrapposizioni */
+  border-radius: 20px;
+  border: none;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+  font-size: 1em;
+  color: white;
+  background-color: #8e2ad6;
+  transition: background-color 0.3s, color 0.3s, transform 0.3s;
+}
+
+
+.auth-buttons .login-button:hover,
+.auth-buttons .logout-button:hover,
+.auth-buttons .area-riservata:hover {
   background-color: #621f92;
   color: #f1f1f1;
   cursor: pointer;
-  transform: scale(1.1); /* aggiunge un effetto di ingrandimento al passaggio del mouse */
+  transform: scale(1.1);
 }
- 
- 
- 
+
 /* side menu */
 .side-menu {
   width: 20%;
@@ -75,14 +91,16 @@ a {
   padding-top: 60px;
   overflow-y: auto;
 }
+
 .side-menu ul {
   list-style-type: none;
   padding-left: 0;
 }
+
 .side-menu li {
   padding: 5px 0;
 }
- 
+
 /* pattern list */
 .App .pattern-list {
   width: 100%;
@@ -90,18 +108,20 @@ a {
   padding-right: 20px;
   padding-bottom: 20px;
 }
+
 .App .pattern-list.home {
   width: auto;
- 
- 
+  padding-left: 25px;
 }
+
 .pattern-card {
   background: white;
   margin: 60px auto;
-  padding: 1px 20px 20px 90px;
+  padding: 1px 20px 20px 60px;
   position: relative;
 }
-.pattern-card .pattern-id {
+
+.pattern-id {
   position: absolute;
   top: -20px;
   left: -20px;
@@ -111,25 +131,33 @@ a {
   height: 40px;
   text-align: center;
   color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
+
+
 .pattern-card h2 {
   margin-bottom: 0;
 }
+
 .pattern-card small {
   margin-right: 10px;
   color: #777;
 }
- 
+
 /* form blocks */
 label.block {
   margin: 10px;
 }
+
 input.block {
   margin: 10px;
   border-radius: 5px;
   height: 20px;
   border: none;
 }
+
 button.block {
   width: 120px;
   height: 40px;
@@ -140,16 +168,16 @@ button.block {
   font-size: 1em;
   color: white;
   background-color: #8e2ad6;
-  transition: background-color 0.3s, color 0.3s, transform 0.3s; /* aggiunge una transizione per l'animazione */
+  transition: background-color 0.3s, color 0.3s, transform 0.3s;
 }
- 
+
 button.block:hover {
   background-color: #621f92;
   color: #f1f1f1;
   cursor: pointer;
-  transform: scale(1.1); /* aggiunge un effetto di ingrandimento al passaggio del mouse */
+  transform: scale(1.1);
 }
- 
+
 .form {
   display: flex;
   justify-content: center;
@@ -159,7 +187,7 @@ button.block:hover {
   background-color: rgba(202, 202, 202, 0.4);
   border-radius: 15px;
   width: 50%;
-  max-width: 500px;  
+  max-width: 500px;
   margin: 0 auto;
   padding: 20px;
 }
