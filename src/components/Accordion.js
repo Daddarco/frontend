@@ -66,8 +66,8 @@ const Accordion = ({ items, keepOthersOpen }) => {
     }));
   };
 
-  console.log('accordionItems:', accordionItems);
-  console.log('filtri:', filtri);
+  //console.log('accordionItems:', accordionItems);
+  //console.log('filtri:', filtri);
 
   return (
     <div className='container'>
@@ -108,7 +108,9 @@ const Accordion = ({ items, keepOthersOpen }) => {
           ))}
         </div>
       </div>
-      <PatternList filtri={filtri} />
+      <div>
+        <PatternList filtri={filtri} />
+      </div>
     </div>
   );
 };
