@@ -12,6 +12,7 @@ import NotFound from './pages/NotFound'
 import Login from './pages/Login'
 import Logout from './pages/Logout'
 import { Protector } from './helpers'
+import ArticoliGDPR from './View/ArticoliGDPR'
 
 //apollo client
 const client = new ApolloClient({
@@ -30,6 +31,7 @@ function App() {
           <Route path="/dettagli/:id" element={<DettagliPattern />} />
           <Route path="/amministratore" element={<Protector Component={ViewAmministratore} />} />
           <Route path="/responsabile" element={<Protector Component={ViewResponsabile} />} />
+          <Route path="/articoli-gdpr" element={<ArticoliGDPR />} />
           <Route path="/login" element={<Login />} />
           <Route path="/logout" element={<Logout />} />
           <Route path="*" element={<NotFound />} />
