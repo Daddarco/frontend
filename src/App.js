@@ -13,6 +13,10 @@ import Login from './pages/Login'
 import Logout from './pages/Logout'
 import { Protector } from './helpers'
 import ArticoliGDPR from './View/ArticoliGDPR'
+import RegistraResponsabile from './pages/RegistraResponsabile'
+import EliminaResponsabile from './pages/EliminaResponsabile'
+import ModifichePKB from './pages/ModifichePKB'
+import DettagliModifica from './pages/DettagliModifica'
 
 //apollo client
 const client = new ApolloClient({
@@ -29,7 +33,11 @@ function App() {
         <Routes>
           <Route exact path="/" element={<Homepage />} />
           <Route path="/dettagli/:id" element={<DettagliPattern />} />
-          <Route path="/amministratore" element={<Protector Component={ViewAmministratore} />} />
+          <Route path="/amministratore/*" element={<Protector Component={ViewAmministratore} />} />
+          <Route path="/amministratore/registra-responsabile" element={<RegistraResponsabile />} />
+          <Route path="/amministratore/elimina-responsabile" element={<EliminaResponsabile />} />
+          <Route path="/amministratore/modifiche-pkb" element={<ModifichePKB />} />
+          <Route path="/amministratore/modifiche-pkb/dettagli/:id" element={<DettagliModifica />} />
           <Route path="/responsabile" element={<Protector Component={ViewResponsabile} />} />
           <Route path="/articoli-gdpr" element={<ArticoliGDPR />} />
           <Route path="/login" element={<Login />} />

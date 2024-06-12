@@ -1,68 +1,7 @@
 import React from 'react';
-import { useQuery, gql } from '@apollo/client';
+import { useQuery } from '@apollo/client';
 import { Link } from 'react-router-dom';
-
-const PATTERNS = gql`
-  query getPatterns {
-    patterns(pagination: {limit: -1}) {
-      data {
-        id
-        attributes {
-          titolo
-          strategias {
-            data {
-              attributes {
-                nome
-              }
-            }
-          }
-          collocazione_mvcs {
-            data {
-              attributes {
-                nome
-              }
-            }
-          }
-          fase_isos {
-            data {
-              attributes {
-                nome
-              }
-            }
-          }
-          articolo_gdprs {
-            data {
-              attributes {
-                nome
-              }
-            }
-          }
-          principio_pbds {
-            data {
-              attributes {
-                nome
-              }
-            }
-          }
-          categoria_owasps {
-            data {
-              attributes {
-                nome
-              }
-            }
-          }
-          cwe_associata_a_categoria_owasps {
-            data {
-              attributes {
-                nome
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-`;
+import { getPatterns } from '../Model/Query';
 
 const filterPatterns = (patterns, filtri) => {
   if (!filtri || filtri.length === 0) {
@@ -87,13 +26,37 @@ const filterPatterns = (patterns, filtri) => {
   });
 };
 
-export default function PatternList({ filtri }) {
-  const { loading, error, data } = useQuery(PATTERNS);
+export default function PatternList({ filtri, query }) {
+  const { loading, error, data } = useQuery(query);
+  
+  console.log(data);
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error.message}</p>;
 
-  const filteredPatterns = filterPatterns(data.patterns.data, filtri);
+  const filteredPatterns = filterPatterns(
+    query === getPatterns ?
+    data.patterns.data :
+    data.patternBuffers.data,
+    filtri);
+
+  if (query !== getPatterns) {
+    return (
+      <div className='pattern-list'>
+        {filteredPatterns.map(item => {
+          const pattern = item.attributes;
+
+          return (
+            <div key={item.id} className="pattern-card">
+              <div className='pattern-id'>Pattern id: {item.id}</div>
+                <Link to={`/amministratore/modifiche-pkb/dettagli/${item.id}`}><h2>{pattern.titolo}</h2></Link>
+              <br></br>
+            </div>
+          );
+        })}
+      </div>
+    )
+  }
 
   return (
     <div className='pattern-list'>
@@ -106,7 +69,7 @@ export default function PatternList({ filtri }) {
           return (
             <div key={item.id} className="pattern-card">
               <div className='pattern-id'>Pattern id: {item.id}</div>
-              <Link to={`/dettagli/${item.id}`}><h2>{pattern.titolo}</h2></Link>
+                <Link to={`/dettagli/${item.id}`}><h2>{pattern.titolo}</h2></Link>
               <br></br>
             </div>
           );

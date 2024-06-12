@@ -5,7 +5,6 @@ import useFetch from '../hooks/useFetch';
 export default function Filtri() {
   const { data, loading, error } = useFetch('http://localhost:1337/api/patterns?populate=*');
   const [uniqueFields, setUniqueFields] = useState([]);
-  
 
   console.log(data);
 
@@ -15,8 +14,8 @@ export default function Filtri() {
 
       data.forEach(item => {
         Object.entries(item.attributes).forEach(([field, value]) => {
-          // Skip the 'user' field
-          if (field === 'user') {
+          // Skip the 'user' and 'pattern-buffers' field
+          if (field === 'user' || field === 'pattern-buffers') {
             return;
           }
 

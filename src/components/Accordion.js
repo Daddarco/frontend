@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './Accordion.css';
 import PatternList from '../View/PatternList';
+import { getPatterns } from '../Model/Query';
 
 const Accordion = ({ items, keepOthersOpen }) => {
   const [accordionItems, setAccordionItems] = useState(null);
@@ -109,7 +110,7 @@ const Accordion = ({ items, keepOthersOpen }) => {
         </div>
       </div>
       <div>
-        <PatternList filtri={filtri} />
+        <PatternList filtri={filtri} query={getPatterns}/>
       </div>
     </div>
   );
