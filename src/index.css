@@ -165,12 +165,10 @@ input.block {
 }
 
 button.block {
-  width: 120px;
-  height: 40px;
-  margin: 10px;
+  padding: 10px 20px; 
   border-radius: 20px;
   border: none;
-  box-shadow: 0 0px 20px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
   font-size: 1em;
   color: white;
   background-color: #8e2ad6;
@@ -196,4 +194,48 @@ button.block:hover {
   max-width: 500px;
   margin: 0 auto;
   padding: 20px;
+}
+
+
+.articoli-button{
+  padding: 10px 20px; 
+  border-radius: 20px;
+  border: none;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+  font-size: 1em;
+  color: white;
+  background-color: #8e2ad6;
+  transition: background-color 0.3s, color 0.3s, transform 0.3s;
+}
+
+.articoli-button:hover{
+  background-color: #621f92;
+  color: #f1f1f1;
+  cursor: pointer;
+  transform: scale(1.1);
+}
+
+
+.registra-button,
+.elimina-button,
+.modifica-button
+{
+  padding: 10px 20px;
+  margin:10px; 
+  border-radius: 20px;
+  border: none;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+  font-size: 1em;
+  color: white;
+  background-color: #8e2ad6;
+  transition: background-color 0.3s, color 0.3s, transform 0.3s;
+}
+
+.registra-button:hover,
+.elimina-button:hover,
+.modifica-button:hover{
+  background-color: #621f92;
+  color: #f1f1f1;
+  cursor: pointer;
+  transform: scale(1.1);
 }

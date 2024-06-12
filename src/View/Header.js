@@ -8,7 +8,7 @@ export default function Header({isAuth, role}) {
       </div>
       <div>
         <Link to={"/articoli-gdpr"}>
-          <button>Visualizza Articoli GDPR</button>
+          <button className='articoli-button'>Visualizza Articoli GDPR</button>
         </Link>
       </div>
       <div className='auth-buttons'>
