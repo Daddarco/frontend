@@ -29,7 +29,6 @@ const RegistraResponsabile = () => {
 
     if (res.jwt && res.user) {
       setMessage('Utente registrato con successo');
-      //fare il set role
     }
   };
 

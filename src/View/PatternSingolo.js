@@ -47,7 +47,13 @@ export default function PatternSingolo({id, pattern, esempi}) {
         <strong>Eventuali articoli GDPR:</strong>
         <ul>
           {pattern.articolo_gdprs.data.map(element => (
-            <li key={element.id}>{element.attributes.nome}</li>
+            <li key={element.id}>
+              <a target='_blank'
+                rel='noreferrer'
+                href={element.attributes.link}>
+                {element.attributes.nome}
+              </a>
+            </li>
           ))}
         </ul>
       </div>

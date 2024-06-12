@@ -42,6 +42,7 @@ const PATTERN = gql`
               id
               attributes {
                 nome
+                link
               }
             }
           },

@@ -2,6 +2,12 @@ export default function RegisterForm({register, message}) {
 
   return (
     <form autoComplete='off' className='form' onSubmit={register}>
+      <label htmlFor='nome' className='block'>Nome</label>
+      <input type='text' id='nome' name='nome' className='block'></input>
+
+      <label htmlFor='cognome' className='block'>Cognome</label>
+      <input type='text' id='cognome' name='cognome' className='block'></input>
+
       <label htmlFor='username' className='block'>Username</label>
       <input type='text' id='username' name='username' className='block'></input>
 

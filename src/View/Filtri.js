@@ -5,6 +5,9 @@ import useFetch from '../hooks/useFetch';
 export default function Filtri() {
   const { data, loading, error } = useFetch('http://localhost:1337/api/patterns?populate=*');
   const [uniqueFields, setUniqueFields] = useState([]);
+  
+
+  console.log(data);
 
   useEffect(() => {
     if (data) {
@@ -12,8 +15,14 @@ export default function Filtri() {
 
       data.forEach(item => {
         Object.entries(item.attributes).forEach(([field, value]) => {
-          if (value && value.data) {
-            value.data.forEach(nestedItem => {
+          // Skip the 'user' field
+          if (field === 'user') {
+            return;
+          }
+
+          if (value?.data) {
+            const dataArray = Array.isArray(value.data) ? value.data : [value.data];
+            dataArray.forEach(nestedItem => {
               Object.entries(nestedItem.attributes).forEach(([subField, subValue]) => {
                 if (subField === 'nome') {
                   if (!fields[field]) {

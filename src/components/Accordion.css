@@ -112,6 +112,12 @@
   position: relative;
 }
 
+.custom-checkbox:checked + .custom-checkbox-label {
+  white-space: normal;
+  overflow: visible;
+  text-overflow: clip;
+}
+
 .container {
   display: flex;
 }
