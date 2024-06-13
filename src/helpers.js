@@ -7,7 +7,8 @@ export const storeUser = (data) => {
     JSON.stringify({
       username: data.user.username,
       jwt: data.jwt,
-      role: data.role
+      role: data.role,
+      userId: data.user.id
     })
   )
 }
@@ -31,62 +32,76 @@ export const Protector = ({Component}) => {
 export const getCampiUnici = (data) => {
   const fields = {};
 
-    data.forEach(item => {
-      Object.entries(item.attributes).forEach(([field, value]) => {
-        // Skip the 'user' and 'pattern-buffers' field
-        if (field === 'user' || field === 'pattern-buffers') {
-          return;
-        }
-
-        if (value?.data) {
-          const dataArray = Array.isArray(value.data) ? value.data : [value.data];
-          dataArray.forEach(nestedItem => {
-            Object.entries(nestedItem.attributes).forEach(([subField, subValue]) => {
-              if (subField === 'nome') {
-                if (!fields[field]) {
-                  fields[field] = new Set();
-                }
-                fields[field].add(subValue);
-              }
-            });
-          });
-        }
-      });
-    });
-
-    const uniqueFieldsArray = Object.entries(fields).map(([field, subValues], index) => {
-      let label;
-      switch (field) {
-        case 'strategias':
-          label = 'Strategia';
-          break;
-        case 'collocazione_mvcs':
-          label = 'Collocazione MVC';
-          break;
-        case 'fase_isos':
-          label = 'Fase ISO';
-          break;
-        case 'articolo_gdprs':
-          label = 'Articolo GDPR';
-          break;
-        case 'principio_pbds':
-          label = 'Principio PbD';
-          break;
-        case 'categoria_owasps':
-          label = 'Categoria OWASP';
-          break;
-        case 'cwe_associata_a_categoria_owasps':
-          label = 'CWE';
-          break;
-        default:
-          label = field;
+  data.forEach(item => {
+    Object.entries(item.attributes).forEach(([field, value]) => {
+      // Skip the 'user' and 'pattern-buffers' field
+      if (field === 'user' || field === 'pattern-buffers') {
+        return;
       }
-      return {
-        id: index,
-        label: label,
-        campi: Array.from(subValues).sort()
-      };
-    });
 
-  return uniqueFieldsArray;
+      if (value?.data) {
+        const dataArray = Array.isArray(value.data) ? value.data : [value.data];
+        dataArray.forEach(nestedItem => {
+          Object.entries(nestedItem.attributes).forEach(([subField, subValue]) => {
+            if (subField === 'nome') {
+              if (!fields[field]) {
+                fields[field] = {
+                  values: new Set(),
+                  ids: new Set() // Utilizza un Set per tenere traccia degli ID unici
+                };
+              }
+              fields[field].values.add(subValue);
+              fields[field].ids.add(nestedItem.id); // Aggiungi l'id del sottocampo al Set
+            }
+          });
+        });
+      }
+    });
+  });
+
+  // Converte i Set in array prima di restituire i campi
+  Object.keys(fields).forEach(field => {
+    fields[field].ids = Array.from(fields[field].ids);
+  });
+
+  return fields;
+}
+
+export const parseCampi = (fields) => {
+  const parsedArray = Object.entries(fields).map(([field, { values, ids }], index) => {
+    let label;
+    switch (field) {
+      case 'strategias':
+        label = 'Strategia';
+        break;
+      case 'collocazione_mvcs':
+        label = 'Collocazione MVC';
+        break;
+      case 'fase_isos':
+        label = 'Fase ISO';
+        break;
+      case 'articolo_gdprs':
+        label = 'Articolo GDPR';
+        break;
+      case 'principio_pbds':
+        label = 'Principio PbD';
+        break;
+      case 'categoria_owasps':
+        label = 'Categoria OWASP';
+        break;
+      case 'cwe_associata_a_categoria_owasps':
+        label = 'CWE';
+        break;
+      default:
+        label = field;
+    }
+    return {
+      id: index,
+      label: field,
+      campi: Array.from(values).sort(),
+      id_campi: ids // Aggiungi l'array di id
+    };
+  });
+
+  return parsedArray;
 }

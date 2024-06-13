@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Accordion from '../components/Accordion';
 import useFetch from '../hooks/useFetch';
-import { getCampiUnici } from '../helpers';
+import { getCampiUnici, parseCampi } from '../helpers';
 
 export default function Filtri() {
   // TODO: aggiungi pagination
@@ -12,16 +12,17 @@ export default function Filtri() {
 
   useEffect(() => {
     if (data) {
-      const uniqueFieldsArray = getCampiUnici(data);
+      const fields = getCampiUnici(data);
+      const parsedArray = parseCampi(fields);
 
-      setUniqueFields(uniqueFieldsArray);
+      setUniqueFields(parsedArray);
+    //console.log(parsedArray)
     }
   }, [data]);
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error.message}</p>;
 
-  //console.log(uniqueFields)
 
   return (
     <div>

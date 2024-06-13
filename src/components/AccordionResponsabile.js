@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import './Accordion.css';
+import './AccordionResponsabile.css';
 import CompilaPattern from '../pages/CompilaPattern';
-//import { getPatterns } from '../Model/Query';
 
 const Accordion = ({ items, keepOthersOpen }) => {
   const [accordionItems, setAccordionItems] = useState(null);
@@ -34,6 +33,7 @@ const Accordion = ({ items, keepOthersOpen }) => {
     }));
   };
 
+  // Dentro il componente AccordionResponsabile
   const handleCheckboxChange = (itemId, index) => {
     setAccordionItems(accordionItems.map((item) => {
       if (item.id === itemId) {
@@ -44,7 +44,10 @@ const Accordion = ({ items, keepOthersOpen }) => {
         const updatedFiltri = filtri.filter(filtro => filtro.label !== item.label);
         const selectedFields = checkedItems.reduce((acc, isChecked, i) => {
           if (isChecked) {
-            acc.push(item.campi[i]);
+            acc.push({
+              campo: item.campi[i],
+              id_campo: item.id_campi[i]
+            });
           }
           return acc;
         }, []);
@@ -67,11 +70,11 @@ const Accordion = ({ items, keepOthersOpen }) => {
     }));
   };
 
-  //console.log('accordionItems:', accordionItems);
-  //console.log('filtri:', filtri);
+  //console.log(filtri);
 
   return (
-      <div>
+    <div className='container'>
+      <div className='side-menu'>
         <div className='accordion-parent'>
           {accordionItems?.map((listItem, key) => (
             <div className={`accordion ${listItem.toggled ? 'toggled' : ''}`} key={key}>
@@ -106,10 +109,11 @@ const Accordion = ({ items, keepOthersOpen }) => {
             </div>
           ))}
         </div>
-      <div>
-        <CompilaPattern filtri={filtri}/>
       </div>
+      <div className='pattern-form-container'>
+        <CompilaPattern filtri={filtri} />
       </div>
+    </div>
   );
 };
 

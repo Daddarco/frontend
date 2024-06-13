@@ -10,7 +10,8 @@ const filterPatterns = (patterns, filtri) => {
 
   return patterns.filter(pattern => {
     return filtri.every(filtro => {
-      const attributeName = filtro.label.toLowerCase().replace(/\s/g, '_') + 's';
+      const attributeName = filtro.label;
+      //.toLowerCase().replace(/\s/g, '_') + 's'
       let patternField = pattern.attributes[attributeName];
 
       // Controllo per i casi speciali come 'CWE'

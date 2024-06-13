@@ -43,15 +43,16 @@ export default function Login() {
     // se l'utente ha effettuato il login, viene memorizzato l'utente nel localStorage
     if (res.jwt && res.user) {
       //console.log('JWT: ', res.jwt);
+      const userId = res.user.id;
       const role = await getRole(res.jwt);
       if (role) {
-        storeUser({...res, role});
+        storeUser({...res, role, userId});
         setMessage(`You are logged in as ${res.user.username}, with role ${role}`);
-        navigate(0)
+        navigate(0);
       } else setMessage('Error getting role');
     }
     
-    //console.log(res)
+    console.log(res)
   };
 
   const getRole = async (jwt) => {

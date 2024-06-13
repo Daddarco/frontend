@@ -4,7 +4,7 @@ export default function ModificaSingola({id, pattern, esempi}) {
   const idPatternAssociato = pattern.pattern.data.id;
   const patternAssociato = pattern.pattern.data.attributes;
   
-  console.log(pattern);
+  //console.log(pattern);
 
   return (
     <div className='pattern-card'>

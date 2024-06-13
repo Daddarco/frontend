@@ -21,8 +21,8 @@ export default function EliminaResponsabile() {
     fetchResponsabili();
   }, []);
 
-  console.log(responsabili);
-  console.log(selectedResponsabile);
+  //console.log(responsabili);
+  //console.log(selectedResponsabile);
 
   const handleDelete = async () => {
     if (!selectedResponsabile) {
