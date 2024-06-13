@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './Accordion.css';
-import PatternList from '../View/PatternList';
-import { getPatterns } from '../Model/Query';
+import CompilaPattern from '../pages/CompilaPattern';
+//import { getPatterns } from '../Model/Query';
 
 const Accordion = ({ items, keepOthersOpen }) => {
   const [accordionItems, setAccordionItems] = useState(null);
@@ -71,9 +71,7 @@ const Accordion = ({ items, keepOthersOpen }) => {
   //console.log('filtri:', filtri);
 
   return (
-    <div className='container'>
-      <div className='side-menu'>
-        Filtra i pattern per le tue esigenze
+      <div>
         <div className='accordion-parent'>
           {accordionItems?.map((listItem, key) => (
             <div className={`accordion ${listItem.toggled ? 'toggled' : ''}`} key={key}>
@@ -108,11 +106,10 @@ const Accordion = ({ items, keepOthersOpen }) => {
             </div>
           ))}
         </div>
-      </div>
       <div>
-        <PatternList filtri={filtri} query={getPatterns} />
+        <CompilaPattern filtri={filtri}/>
       </div>
-    </div>
+      </div>
   );
 };
 

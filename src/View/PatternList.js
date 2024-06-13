@@ -13,7 +13,7 @@ const filterPatterns = (patterns, filtri) => {
       const attributeName = filtro.label.toLowerCase().replace(/\s/g, '_') + 's';
       let patternField = pattern.attributes[attributeName];
 
-      // Controllo per i casi speciali come 'Articolo GDPR', 'Categoria OWASP', 'CWE'
+      // Controllo per i casi speciali come 'CWE'
       if (filtro.label === 'CWE') {
         patternField = pattern.attributes.cwe_associata_a_categoria_owasps;
       }
@@ -29,7 +29,7 @@ const filterPatterns = (patterns, filtri) => {
 export default function PatternList({ filtri, query }) {
   const { loading, error, data } = useQuery(query);
   
-  console.log(data);
+  //console.log(data);
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error.message}</p>;
