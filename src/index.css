@@ -11,6 +11,16 @@ h1, h2, h3, h4 {
   font-weight: bold;
 }
 
+.pattern-title {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+.pattern-title p {
+  margin-bottom: 0;
+}
+
 .App {
   display: flex;
   justify-content: space-between;
@@ -214,7 +224,6 @@ button.block:hover {
   cursor: pointer;
   transform: scale(1.1);
 }
-
 
 .registra-button,
 .elimina-button,

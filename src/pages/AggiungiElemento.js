@@ -16,7 +16,7 @@ export default function AggiungiElemento() {
       const uniqueFieldsArray = Object.entries(fields).map(([field, { values, ids }], index) => ({
         id: index,
         label: field,
-        campi: Array.from(values).sort(),
+        campi: Array.from(values),
         id_campi: ids // Aggiungi l'array di id
       }));
   

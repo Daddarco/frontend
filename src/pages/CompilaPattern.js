@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import PatternForm from '../View/PatternForm';
 import { userData } from '../helpers';
 
+//TODO: check che tutti i campi siano presenti
+
 function formatBody(formData, filtri, userId) {
   const jsonData = Object.fromEntries(formData);
 
@@ -29,11 +31,12 @@ function formatBody(formData, filtri, userId) {
   return body;
 }
 
-export default function CompilaPattern({ filtri }) {
+export default function CompilaPattern({ filtri, singlePattern }) {
   const [message, setMessage] = useState(null);
   const { jwt, userId } = userData();
 
   console.log(filtri);
+  console.log(singlePattern);
 
   const sendPattern = async (event) => {
     event.preventDefault();
@@ -44,7 +47,7 @@ export default function CompilaPattern({ filtri }) {
 
     // Formatta il body da inviare
     const body = formatBody(formData, filtri, userId);
-    console.log(body);
+    //console.log(body);
 
     // richiesta POST
     const reqLoginOptions = {
@@ -66,8 +69,7 @@ export default function CompilaPattern({ filtri }) {
       return;
     }
 
-    if (res.jwt && res.user) {
-      //non appare il messaggio
+    if (res.data) {
       setMessage('Pattern inviato con successo');
     }
 
@@ -76,7 +78,7 @@ export default function CompilaPattern({ filtri }) {
 
   return (
     <div>
-      <PatternForm sendPattern={sendPattern} message={message} />
+      <PatternForm sendPattern={sendPattern} message={message} singlePattern={singlePattern} />
     </div>
   );
 }

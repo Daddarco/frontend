@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import './AccordionResponsabile.css';
 import CompilaPattern from '../pages/CompilaPattern';
 
-const Accordion = ({ items, keepOthersOpen }) => {
+const AccordionResponsabile = ({ items, singlePattern, keepOthersOpen }) => {
   const [accordionItems, setAccordionItems] = useState(null);
   const [filtri, setFiltri] = useState([]);
 
@@ -15,6 +15,34 @@ const Accordion = ({ items, keepOthersOpen }) => {
       })));
     }
   }, [items]);
+
+  useEffect(() => {
+    if (singlePattern && accordionItems) {
+      const singlePatternFields = {};
+
+      // Estrai i campi dal singlePattern
+      Object.keys(singlePattern.data.attributes).forEach(key => {
+        if (Array.isArray(singlePattern.data.attributes[key]?.data)) {
+          singlePatternFields[key] = singlePattern.data.attributes[key].data.map(item => item.id);
+        }
+      });
+
+      const updatedAccordionItems = accordionItems.map(item => {
+        const checkedItems = item.id_campi.map(id_campo => {
+          // Controlla se l'id_campo è presente nel singlePattern
+          const isChecked = singlePatternFields[item.label]?.includes(id_campo) || false;
+          return isChecked;
+        });
+
+        return {
+          ...item,
+          checkedItems
+        };
+      });
+
+      setAccordionItems(updatedAccordionItems);
+    }
+  }, [singlePattern]);
 
   const handleAccordionToggle = (clickedItem) => {
     setAccordionItems(accordionItems.map((item) => {
@@ -33,7 +61,6 @@ const Accordion = ({ items, keepOthersOpen }) => {
     }));
   };
 
-  // Dentro il componente AccordionResponsabile
   const handleCheckboxChange = (itemId, index) => {
     setAccordionItems(accordionItems.map((item) => {
       if (item.id === itemId) {
@@ -111,10 +138,10 @@ const Accordion = ({ items, keepOthersOpen }) => {
         </div>
       </div>
       <div className='pattern-form-container'>
-        <CompilaPattern filtri={filtri} />
+        <CompilaPattern filtri={filtri} singlePattern={singlePattern}/>
       </div>
     </div>
   );
 };
 
-export default Accordion;
+export default AccordionResponsabile;

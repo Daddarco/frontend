@@ -52,7 +52,7 @@ export default function Login() {
       } else setMessage('Error getting role');
     }
     
-    console.log(res)
+    //console.log(res)
   };
 
   const getRole = async (jwt) => {

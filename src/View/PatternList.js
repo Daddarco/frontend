@@ -27,42 +27,32 @@ const filterPatterns = (patterns, filtri) => {
   });
 };
 
-export default function PatternList({ filtri, query }) {
+export default function PatternList({ filtri, query, user }) {
   const { loading, error, data } = useQuery(query);
-  
+
+  //console.log(user);  
   //console.log(data);
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error.message}</p>;
 
+  let message;
   const filteredPatterns = filterPatterns(
     query === getPatterns ?
     data.patterns.data :
     data.patternBuffers.data,
     filtri);
-
-  if (query !== getPatterns) {
-    return (
-      <div className='pattern-list'>
-        {filteredPatterns.map(item => {
-          const pattern = item.attributes;
-
-          return (
-            <div key={item.id} className="pattern-card">
-              <div className='pattern-id'>Pattern id: {item.id}</div>
-                <Link to={`/amministratore/modifiche-pkb/dettagli/${item.id}`}><h2>{pattern.titolo}</h2></Link>
-              <br></br>
-            </div>
-          );
-        })}
-      </div>
-    )
+  
+  if (query === getPatterns) {
+    message = <p>Nessun pattern corrisponde ai filtri selezionati</p>;
+  } else {
+    message = <p>Nessuna richiesta di modifica</p>;
   }
 
   return (
     <div className='pattern-list'>
       {filteredPatterns.length === 0 ? (
-        <p>Nessun pattern corrisponde ai filtri selezionati</p>
+        message
       ) : (
         filteredPatterns.map(item => {
           const pattern = item.attributes;
@@ -70,7 +60,18 @@ export default function PatternList({ filtri, query }) {
           return (
             <div key={item.id} className="pattern-card">
               <div className='pattern-id'>Pattern id: {item.id}</div>
-                <Link to={`/dettagli/${item.id}`}><h2>{pattern.titolo}</h2></Link>
+                {query === getPatterns && user === null ? (
+                  <Link to={`/dettagli/${item.id}`}><h2>{pattern.titolo}</h2></Link>
+                ) : (
+                  user === "responsabile" ? (
+                    <Link reloadDocument to={`/responsabile/modifica-elemento/dettagli/${item.id}`}><h2>{pattern.titolo}</h2></Link>
+                  ) : (    
+                    <div className='pattern-title'>
+                      <Link reloadDocument to={`/amministratore/modifiche-pkb/dettagli/${item.id}`}><h2>{pattern.titolo}</h2></Link>
+                      <p>{pattern.stato.data.attributes.nome}</p>
+                    </div>
+                  )
+                )}
               <br></br>
             </div>
           );

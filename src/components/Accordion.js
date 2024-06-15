@@ -110,7 +110,7 @@ const Accordion = ({ items, keepOthersOpen }) => {
         </div>
       </div>
       <div>
-        <PatternList filtri={filtri} query={getPatterns} />
+        <PatternList filtri={filtri} query={getPatterns} user={null} />
       </div>
     </div>
   );

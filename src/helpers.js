@@ -105,3 +105,18 @@ export const parseCampi = (fields) => {
 
   return parsedArray;
 }
+
+export const splitExamples = (text) => {
+  if (text === "NA") return ["No examples"];
+
+  // Divide il testo in base alle occorrenze di 'Example'
+  let examples = text.split('Example');
+  
+  // Rimuovi il primo elemento dell'array che è una stringa vuota
+  examples.shift();
+  
+  // Aggiungi 'Example' all'inizio di ogni elemento dell'array
+  examples = examples.map(example => 'Example ' + example.trim());
+  
+  return examples;
+}

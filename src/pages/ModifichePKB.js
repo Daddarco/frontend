@@ -4,8 +4,6 @@ import { getPatternsBuffer } from '../Model/Query';
 
 export default function ModifichePKB() {
   return (
-    <div>
-      <PatternList filtri={null} query={getPatternsBuffer}/>
-    </div>
+    <PatternList filtri={null} query={getPatternsBuffer} user={"amministratore"} />
   )
 }

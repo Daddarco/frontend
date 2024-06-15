@@ -20,6 +20,7 @@ import DettagliModifica from './pages/DettagliModifica'
 import AggiungiElemento from './pages/AggiungiElemento'
 import EliminaElemento from './pages/EliminaElemento'
 import ModificaElemento from './pages/ModificaElemento'
+import DettagliElemento from './pages/DettagliElemento'
 
 //apollo client
 const client = new ApolloClient({
@@ -45,7 +46,7 @@ function App() {
           <Route path="/responsabile/aggiungi-elemento" element={<AggiungiElemento />} />
           <Route path="/responsabile/elimina-elemento" element={<EliminaElemento />} />
           <Route path="/responsabile/modifica-elemento" element={<ModificaElemento />} />
-          {/*<Route path="/responsabile/modifica-elemento/dettagli/:id" element={<DettagliElemento />} />*/}
+          <Route path="/responsabile/modifica-elemento/dettagli/:id" element={<DettagliElemento />} />
           <Route path="/articoli-gdpr" element={<ArticoliGDPR />} />
           <Route path="/login" element={<Login />} />
           <Route path="/logout" element={<Logout />} />

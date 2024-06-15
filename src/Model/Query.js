@@ -127,6 +127,13 @@ query getPatternsBuffer {
             }
           }
         }
+        stato {
+          data {
+            attributes {
+              nome
+            }
+          }
+        }
       }
     }
   }
