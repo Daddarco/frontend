@@ -5,7 +5,7 @@ import useFetch from '../hooks/useFetch';
 import { useParams } from 'react-router-dom';
 
 export default function DettagliElemento() {
-  const { data, loading, error } = useFetch('http://localhost:1337/api/patterns?populate=*');
+  const { data, loading, error } = useFetch('http://localhost:1337/api/patterns?pagination[pageSize]=100&populate=*');
   const [uniqueFields, setUniqueFields] = useState([]);
   const [singlePattern, setSinglePattern] = useState(null);
   const { id } = useParams();
@@ -37,7 +37,7 @@ export default function DettagliElemento() {
 
   return (
     <div>
-      <AccordionResponsabile items={uniqueFields} singlePattern={singlePattern} keepOthersOpen={true} />
+      <AccordionResponsabile items={uniqueFields} singlePattern={singlePattern} keepOthersOpen={true} stato={"Modifica"} />
     </div>
   );
 }

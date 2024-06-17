@@ -4,7 +4,7 @@ import useFetch from '../hooks/useFetch';
 import AccordionResponsabile from '../components/AccordionResponsabile';
 
 export default function AggiungiElemento() {
-  const { data, loading, error } = useFetch('http://localhost:1337/api/patterns?populate=*');
+  const { data, loading, error } = useFetch('http://localhost:1337/api/patterns?pagination[pageSize]=100&populate=*');
   const [uniqueFields, setUniqueFields] = useState([]);
 
   //console.log(data);
@@ -31,7 +31,7 @@ export default function AggiungiElemento() {
 
   return (
     <div>
-      <AccordionResponsabile items={uniqueFields} keepOthersOpen={true} />
+      <AccordionResponsabile items={uniqueFields} keepOthersOpen={true} stato={"Aggiungi"} />
     </div>
   )
 }

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import './AccordionResponsabile.css';
 import CompilaPattern from '../pages/CompilaPattern';
 
-const AccordionResponsabile = ({ items, singlePattern, keepOthersOpen }) => {
+const AccordionResponsabile = ({ items, singlePattern, keepOthersOpen, stato }) => {
   const [accordionItems, setAccordionItems] = useState([]);
   const [filtri, setFiltri] = useState([]);
 
@@ -130,7 +130,7 @@ const AccordionResponsabile = ({ items, singlePattern, keepOthersOpen }) => {
         </div>
       </div>
       <div className='pattern-form-container'>
-        <CompilaPattern filtri={filtri} singlePattern={singlePattern} />
+        <CompilaPattern filtri={filtri} singlePattern={singlePattern} stato={stato} />
       </div>
     </div>
   );

@@ -5,6 +5,7 @@ export default function EliminaPattern() {
   const [patterns, setPatterns] = useState([]);
   const [selectedPattern, setSelectedPattern] = useState(null);
   const [message, setMessage] = useState('');
+  const [showConfirmation, setShowConfirmation] = useState(false);
   const { jwt, userId } = userData();
 
   useEffect(() => {
@@ -93,6 +94,15 @@ export default function EliminaPattern() {
     }
   };
 
+  const confirmDelete = () => {
+    handleDelete();
+    setShowConfirmation(false);
+  };
+
+  const cancelDelete = () => {
+    setShowConfirmation(false);
+  };
+
   return (
     <div>
       <h1>Elimina Pattern</h1>
@@ -108,9 +118,16 @@ export default function EliminaPattern() {
             </option>
           ))}
         </select>
-        <button onClick={handleDelete}>Elimina</button>
+        <button onClick={() => setShowConfirmation(true)}>Elimina</button>
       </div>
       {message && <p>{message}</p>}
+      {showConfirmation && (
+        <div className="confirmation-popup">
+          <p>Sicuro di voler eliminare questo pattern?</p>
+          <button onClick={confirmDelete}>Conferma</button>
+          <button onClick={cancelDelete}>Annulla</button>
+        </div>
+      )}
     </div>
   );
 }

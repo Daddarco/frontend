@@ -4,7 +4,7 @@ import { userData } from '../helpers';
 
 //TODO: check che tutti i campi siano presenti
 
-function formatBody(formData, filtri, userId) {
+function formatBody(formData, filtri, userId, stato, idPatternAssociato) {
   const jsonData = Object.fromEntries(formData);
 
   // Crea un oggetto vuoto per contenere i campi filtrati con gli id_campi
@@ -15,14 +15,24 @@ function formatBody(formData, filtri, userId) {
     filtriConIdCampi[filtro.label] = filtro.checkedItems.map(item => item.id_campo);
   });
 
+  const id = idPatternAssociato || null
+  let statoBody;
+
+  if (stato === 'Aggiungi') {
+    statoBody = {id: 3};
+  } else if (stato === 'Modifica') {
+    statoBody = {id: 1};
+  }
+
   const body = {
     data: {
       user: userId,
-      stato: {"id": 3},
+      stato: statoBody,
       titolo: jsonData.titolo,
       descrizione: jsonData.descrizione,
       contesto: jsonData.contesto,
       esempio: jsonData.esempio,
+      pattern: id,
       // Aggiungi i campi filtrati con gli id_campi
       ...filtriConIdCampi
     }
@@ -31,7 +41,7 @@ function formatBody(formData, filtri, userId) {
   return body;
 }
 
-export default function CompilaPattern({ filtri, singlePattern }) {
+export default function CompilaPattern({ filtri, singlePattern, stato }) {
   const [message, setMessage] = useState(null);
   const { jwt, userId } = userData();
 
@@ -46,7 +56,7 @@ export default function CompilaPattern({ filtri, singlePattern }) {
     const formData = new FormData(event.target);
 
     // Formatta il body da inviare
-    const body = formatBody(formData, filtri, userId);
+    const body = formatBody(formData, filtri, userId, stato, singlePattern.id);
     //console.log(body);
 
     // richiesta POST
@@ -78,7 +88,7 @@ export default function CompilaPattern({ filtri, singlePattern }) {
 
   return (
     <div>
-      <PatternForm sendPattern={sendPattern} message={message} singlePattern={singlePattern} />
+      <PatternForm sendPattern={sendPattern} message={message} singlePattern={singlePattern} stato={stato} />
     </div>
   );
 }

@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function PatternForm({ sendPattern, message, singlePattern }) {
+export default function PatternForm({ sendPattern, message, singlePattern, stato }) {
   return (
     <div className='pattern-form'>
       <form autoComplete='off' onSubmit={sendPattern}>
@@ -38,7 +38,13 @@ export default function PatternForm({ sendPattern, message, singlePattern }) {
           defaultValue={singlePattern?.attributes?.esempio || ''}
         />
 
-        <button type='submit' className='richiesta-button'>Manda richiesta di aggiunta</button>
+        <button type='submit' className='richiesta-button'>
+          {stato === 'Aggiungi' ? (
+            <p>Manda richiesta di aggiunta</p>
+          ) : (
+            <p>Manda richiesta di modifica</p>
+          )}
+        </button>
         <div>{message}</div>
       </form>
     </div>
