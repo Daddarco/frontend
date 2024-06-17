@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './AccordionResponsabile.css';
 import CompilaPattern from '../pages/CompilaPattern';
+import { PropTypes } from 'prop-types';
 
 const AccordionResponsabile = ({ items, singlePattern, keepOthersOpen, stato }) => {
   const [accordionItems, setAccordionItems] = useState([]);
@@ -20,7 +21,7 @@ const AccordionResponsabile = ({ items, singlePattern, keepOthersOpen, stato }) 
 
   // Update checked items based on singlePattern
   useEffect(() => {
-    if (singlePattern && singlePattern.attributes && accordionItems.length > 0) {
+    if (singlePattern?.attributes && accordionItems.length > 0) {
       const singlePatternFields = {};
 
       Object.keys(singlePattern.attributes).forEach(key => {
@@ -96,7 +97,7 @@ const AccordionResponsabile = ({ items, singlePattern, keepOthersOpen, stato }) 
       <div className='side-menu'>
         <div className='accordion-parent'>
           {accordionItems.map((listItem, key) => (
-            <div className={`accordion ${listItem.toggled ? 'toggled' : ''}`} key={key}>
+            <div className={`accordion ${listItem.toggled ? 'toggled' : ''}`} key={listItem.id}>
               <button className='toggle' onClick={() => handleAccordionToggle(listItem)}>
                 <p>{listItem.label}</p>
                 <div className='direction-indicator'>{listItem.toggled ? '-' : '+'}</div>
@@ -106,7 +107,7 @@ const AccordionResponsabile = ({ items, singlePattern, keepOthersOpen, stato }) 
                   {listItem.toggled && (
                     <div>
                       {listItem.campi.map((campo, index) => (
-                        <div key={index}>
+                        <div key={campo.id}>
                           <input
                             type="checkbox"
                             id={`${campo}-${index}`}
@@ -137,3 +138,10 @@ const AccordionResponsabile = ({ items, singlePattern, keepOthersOpen, stato }) 
 };
 
 export default AccordionResponsabile;
+
+AccordionResponsabile.propTypes = {
+  items: PropTypes.array.isRequired,
+  keepOthersOpen: PropTypes.bool.isRequired,
+  singlePattern: PropTypes.object,
+  stato: PropTypes.string.isRequired
+}

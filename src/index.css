@@ -248,3 +248,31 @@ button.block:hover {
   cursor: pointer;
   transform: scale(1.1);
 }
+
+.button-modifica,
+.button-elimina,
+.button-aggiungi{
+  padding: 10px 20px; 
+  border-radius: 20px;
+  margin-left: 20px;
+  border: none;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+  font-size: 1em;
+  color: white;
+  background-color: #8e2ad6;
+  transition: background-color 0.3s, color 0.3s, transform 0.3s;
+}
+
+.p-richiesta {
+  margin: 0;
+  border: none;
+}
+
+.button-modifica:hover,
+.button-elimina:hover,
+.button-aggiungi:hover{
+  background-color: #621f92;
+  color: #f1f1f1;
+  cursor: pointer;
+  transform: scale(1.1);
+}

@@ -1,46 +1,32 @@
 import React from 'react';
+import { PropTypes } from 'prop-types';
 
-export default function PatternForm({ sendPattern, message, singlePattern }) {
+export default function RegisterForm({register, message}) {
+
   return (
-    <div className='pattern-form'>
-      <form autoComplete='off' onSubmit={sendPattern}>
-        <label htmlFor='titolo' className='label-titolo'>Titolo</label>
-        <input
-          type='text'
-          id='titolo'
-          name='titolo'
-          className='input-titolo'
-          defaultValue={singlePattern?.data?.attributes?.titolo || ''}
-        />
+    <form autoComplete='off' className='form' onSubmit={register}>
+      <label htmlFor='nome' className='block'>Nome</label>
+      <input type='text' id='nome' name='nome' className='block'></input>
 
-        <label htmlFor='descrizione' className='label-descrizione'>Descrizione</label>
-        <textarea
-          id='descrizione'
-          name='descrizione'
-          className='text-descrizione'
-          defaultValue={singlePattern?.data?.attributes?.descrizione || ''}
-        />
+      <label htmlFor='cognome' className='block'>Cognome</label>
+      <input type='text' id='cognome' name='cognome' className='block'></input>
 
-        <label htmlFor='contesto' className='label-contesto'>Contesto</label>
-        <textarea
-          id='contesto'
-          name='contesto'
-          className='text-contesto'
-          defaultValue={singlePattern?.data?.attributes?.contesto || ''}
-        />
+      <label htmlFor='username' className='block'>Username</label>
+      <input type='text' id='username' name='username' className='block'></input>
 
-        <label htmlFor='esempio' className='label-esempio'>Esempio</label>
-        <textarea
-          placeholder='Example 1: <text>. Example 2: <text>.'
-          id='esempio'
-          name='esempio'
-          className='text-esempio'
-          defaultValue={singlePattern?.data?.attributes?.esempio || ''}
-        />
+      <label htmlFor='email' className='block'>Email</label>
+      <input type='email' id='email' name='email' className='block mb-2'></input>
 
-        <button type='submit' className='richiesta-button'>Manda richiesta di aggiunta</button>
-        <div>{message}</div>
-      </form>
-    </div>
-  );
+      <label htmlFor='password' className='block'>Password</label>
+      <input type='password' id='password' name='password' className='block'></input>
+      
+      <button type='submit' className='block'>Registra nuovo responsabile</button>
+      <div>{message}</div>
+    </form>
+  )
+}
+
+RegisterForm.propTypes = {
+  register: PropTypes.func.isRequired,
+  message: PropTypes.string.isRequired
 }

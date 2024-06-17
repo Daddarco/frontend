@@ -11,7 +11,7 @@ export default function Login() {
   useEffect(() => {
     const user = userData();
 
-    if (user && user.jwt) navigate('/');
+    if (user?.jwt) navigate('/');
   }, [navigate]);
 
   const login = async (event) => {
@@ -42,7 +42,6 @@ export default function Login() {
 
     // se l'utente ha effettuato il login, viene memorizzato l'utente nel localStorage
     if (res.jwt && res.user) {
-      //console.log('JWT: ', res.jwt);
       const userId = res.user.id;
       const role = await getRole(res.jwt);
       if (role) {
@@ -56,7 +55,6 @@ export default function Login() {
   };
 
   const getRole = async (jwt) => {
-    //console.log('getRole', jwt);
     const reqRoleOptions = {
       method: 'GET',
       headers: {
@@ -75,7 +73,7 @@ export default function Login() {
       return '';
     }
 
-    if (res.role && res.role.type) return res.role.type;
+    if (res.role?.type) return res.role.type;
 
     return '';
   }

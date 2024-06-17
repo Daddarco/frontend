@@ -99,13 +99,9 @@ export default function DettagliPattern() {
 
   if (loading) return <p>Loading...</p>
   if (error) return <p>Error: {error.message}</p>
-
-  //console.log(data)
   
   let pattern = data.pattern.data.attributes
   let esempi = splitExamples(pattern.esempio)
-
-  //console.log(esempi)
 
   return (
     <PatternSingolo id={id} pattern={pattern} esempi={esempi} />

@@ -1,5 +1,6 @@
 import React from 'react';
 import {splitExamples} from '../helpers.js'
+import { PropTypes } from 'prop-types';
 
 export default function ModificaSingola({ id, pattern }) {
   const idPatternAssociato = pattern.pattern?.data?.id;
@@ -96,7 +97,7 @@ export default function ModificaSingola({ id, pattern }) {
         <strong>Eventuali esempi:</strong>
         <ul>
           {esempi.map((element, index) => (
-            <li key={index}>{element}</li>
+            <li key={element.id}>{element}</li>
           ))}
         </ul>
       </div>
@@ -117,4 +118,9 @@ export default function ModificaSingola({ id, pattern }) {
       )}
     </div>
   );
+}
+
+ModificaSingola.propTypes = {
+  id: PropTypes.number.isRequired,
+  pattern: PropTypes.object.isRequired
 }

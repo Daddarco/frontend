@@ -5,7 +5,8 @@ export default function EliminaResponsabile() {
   const [responsabili, setResponsabili] = useState([]);
   const [selectedResponsabile, setSelectedResponsabile] = useState(null);
   const [message, setMessage] = useState('');
-  const { jwt } = userData();
+  const [showConfirmation, setShowConfirmation] = useState(false);
+  const { jwt} = userData();
 
   useEffect(() => {
     const fetchResponsabili = async () => {
@@ -27,9 +28,6 @@ export default function EliminaResponsabile() {
       return;
     }
 
-    if (!window.confirm('Sicuro di voler eliminare questo responsabile?')) {
-      return;
-    }
 
     try {
       const response = await fetch(`http://localhost:1337/api/users/${selectedResponsabile}`, {
@@ -57,11 +55,21 @@ export default function EliminaResponsabile() {
     }
   };
 
+  const confirmDelete = () => {
+    handleDelete();
+    setShowConfirmation(false);
+  };
+
+  const cancelDelete = () => {
+    setShowConfirmation(false);
+  };
+
   return (
-    <div>
+    <div className="pattern-form-container">
       <h1>Elimina Responsabile</h1>
-      <div>
+      <div className="pattern-select-container">
         <select
+          className="pattern-select"
           value={selectedResponsabile || ''}
           onChange={e => setSelectedResponsabile(e.target.value)}
         >
@@ -72,9 +80,17 @@ export default function EliminaResponsabile() {
             </option>
           ))}
         </select>
-        <button onClick={handleDelete}>Elimina</button>
+        <button className="richiesta-button" onClick={() => setShowConfirmation(true)}>Elimina</button>
       </div>
-      {message && <p>{message}</p>}
+      {message && <p className="message">{message}</p>}
+      {showConfirmation && (
+        <div className="confirmation-popup">
+          <p>Sicuro di voler eliminare questo Responsabile?</p>
+          <button className="richiesta-button" onClick={confirmDelete}>Conferma</button>
+          <button className="richiesta-button" onClick={cancelDelete}>Annulla</button>
+        </div>
+      )}
     </div>
   );
-}
+
+}  

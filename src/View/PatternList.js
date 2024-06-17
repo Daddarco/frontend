@@ -2,6 +2,7 @@ import React from 'react';
 import { useQuery } from '@apollo/client';
 import { Link } from 'react-router-dom';
 import { getPatterns } from '../Model/Query';
+import { PropTypes } from 'prop-types';
 
 const filterPatterns = (patterns, filtri) => {
   if (!filtri || filtri.length === 0) {
@@ -11,7 +12,6 @@ const filterPatterns = (patterns, filtri) => {
   return patterns.filter(pattern => {
     return filtri.every(filtro => {
       const attributeName = filtro.label;
-      //.toLowerCase().replace(/\s/g, '_') + 's'
       let patternField = pattern.attributes[attributeName];
 
       // Controllo per i casi speciali come 'CWE'
@@ -19,7 +19,7 @@ const filterPatterns = (patterns, filtri) => {
         patternField = pattern.attributes.cwe_associata_a_categoria_owasps;
       }
       
-      if (!patternField || !patternField.data) return false;
+      if (!patternField?.data) return false;
 
       const patternFieldValues = patternField.data.map(item => item.attributes.nome);
       return filtro.checkedItems.every(item => patternFieldValues.includes(item));
@@ -29,9 +29,6 @@ const filterPatterns = (patterns, filtri) => {
 
 export default function PatternList({ filtri, query, user }) {
   const { loading, error, data } = useQuery(query);
-
-  //console.log(user);  
-  //console.log(data);
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error.message}</p>;
@@ -79,4 +76,10 @@ export default function PatternList({ filtri, query, user }) {
       )}
     </div>
   );
+}
+
+PatternList.propTypes = {
+  filtri: PropTypes.array.isRequired,
+  query: PropTypes.string.isRequired,
+  user: PropTypes.string.isRequired
 }

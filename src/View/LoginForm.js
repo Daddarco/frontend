@@ -1,3 +1,5 @@
+import { PropTypes } from 'prop-types';
+
 export default function LoginForm({login, message}) {
 
   return (
@@ -12,4 +14,9 @@ export default function LoginForm({login, message}) {
       <div>{message}</div>
     </form>
   )
+}
+
+LoginForm.propTypes = {
+  login: PropTypes.func.isRequired,
+  message: PropTypes.string. isRequired
 }

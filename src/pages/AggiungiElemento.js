@@ -7,8 +7,6 @@ export default function AggiungiElemento() {
   const { data, loading, error } = useFetch('http://localhost:1337/api/patterns?pagination[pageSize]=100&populate=*');
   const [uniqueFields, setUniqueFields] = useState([]);
 
-  //console.log(data);
-
   useEffect(() => {
     if (data) {
       const fields = getCampiUnici(data);
@@ -23,8 +21,6 @@ export default function AggiungiElemento() {
       setUniqueFields(uniqueFieldsArray);
     }
   }, [data]);
-
-  //console.log(uniqueFields);
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error.message}</p>;

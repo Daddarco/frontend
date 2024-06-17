@@ -371,20 +371,20 @@ export default function DettagliModifica() {
       <ModificaSingola id={id} pattern={pattern} />
       {stato === 'Modifica' && (
         <div>
-          <button onClick={handlePut}>Conferma richiesta di modifica</button>
-          <button onClick={handleDelete}>Respingi richiesta di modifica</button>
+          <button className='button-modifica' onClick={handlePut}>Conferma richiesta di modifica</button>
+          <button className='button-modifica' onClick={handleDelete}>Respingi richiesta di modifica</button>
         </div>
       )}
       {stato === 'Aggiungi' && (
         <div>
-          <button onClick={handlePost}>Conferma richiesta di aggiunta</button>
-          <button onClick={handleDelete}>Respingi richiesta di aggiunta</button>
+          <button className='button-aggiungi' onClick={handlePost}>Conferma richiesta di aggiunta</button>
+          <button className='button-aggiungi' onClick={handleDelete}>Respingi richiesta di aggiunta</button>
         </div>
       )}
       {stato === 'Elimina' && (
         <div>
-          <button onClick={handleDeletePatternAssociato}>Conferma richiesta di eliminazione</button>
-          <button onClick={handleDelete}>Respingi richiesta di eliminazione</button>
+          <button className='button-elimina' onClick={handleDeletePatternAssociato}>Conferma richiesta di eliminazione</button>
+          <button className='button-elimina' onClick={handleDelete}>Respingi richiesta di eliminazione</button>
         </div>
       )}
       {feedback && <p>{feedback}</p>}

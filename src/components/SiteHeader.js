@@ -10,7 +10,7 @@ export default function SiteHeader() {
     const user = userData();
     //console.log(user)
     
-    if (user && user.jwt && user.role) {
+    if (user?.jwt && user.role) {
       setIsAuth(true);
       setRole(user.role);
     }

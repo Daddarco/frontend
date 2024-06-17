@@ -5,6 +5,7 @@ export default function EliminaPattern() {
   const [patterns, setPatterns] = useState([]);
   const [selectedPattern, setSelectedPattern] = useState(null);
   const [message, setMessage] = useState('');
+  const [showConfirmation, setShowConfirmation] = useState(false);
   const { jwt, userId } = userData();
 
   useEffect(() => {
@@ -17,16 +18,13 @@ export default function EliminaPattern() {
         console.error('Error fetching patterns:', error);
       }
     };
+
     fetchPatterns();
   }, []);
 
   const handleDelete = async () => {
     if (!selectedPattern) {
       setMessage('Seleziona un pattern da eliminare');
-      return;
-    }
-
-    if (!window.confirm('Sicuro di voler eliminare questo pattern?')) {
       return;
     }
 
@@ -57,7 +55,7 @@ export default function EliminaPattern() {
             cwe_associata_a_categoria_owasps: patternData.cwe_associata_a_categoria_owasps.data.map(el => el.id),
             user: userId,
             pattern: patternId,
-            stato: { id: 2 }
+            stato: {"id": 2}
           }
         })
       });
@@ -96,11 +94,21 @@ export default function EliminaPattern() {
     }
   };
 
+  const confirmDelete = () => {
+    handleDelete();
+    setShowConfirmation(false);
+  };
+
+  const cancelDelete = () => {
+    setShowConfirmation(false);
+  };
+
   return (
-    <div>
+    <div className="pattern-form-container">
       <h1>Elimina Pattern</h1>
-      <div>
+      <div className="pattern-select-container">
         <select
+          className="pattern-select"
           value={selectedPattern ? selectedPattern.id : ''}
           onChange={e => setSelectedPattern(patterns.find(pattern => pattern.id === parseInt(e.target.value)))}
         >
@@ -111,9 +119,17 @@ export default function EliminaPattern() {
             </option>
           ))}
         </select>
-        <button onClick={handleDelete}>Elimina</button>
+        <button className="richiesta-button" onClick={() => setShowConfirmation(true)}>Elimina</button>
       </div>
-      {message && <p>{message}</p>}
+      {message && <p className="message">{message}</p>}
+      {showConfirmation && (
+        <div className="confirmation-popup">
+          <p>Sicuro di voler eliminare questo pattern?</p>
+          <button className="richiesta-button" onClick={confirmDelete}>Conferma</button>
+          <button className="richiesta-button" onClick={cancelDelete}>Annulla</button>
+        </div>
+      )}
     </div>
   );
 }
+  

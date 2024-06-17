@@ -1,4 +1,5 @@
 import React from 'react';
+import { PropTypes } from 'prop-types';
 
 export default function PatternForm({ sendPattern, message, singlePattern, stato }) {
   return (
@@ -40,13 +41,20 @@ export default function PatternForm({ sendPattern, message, singlePattern, stato
 
         <button type='submit' className='richiesta-button'>
           {stato === 'Aggiungi' ? (
-            <p>Manda richiesta di aggiunta</p>
+            <p className='p-richiesta'>Manda richiesta di aggiunta</p>
           ) : (
-            <p>Manda richiesta di modifica</p>
+            <p className='p-richiesta'>Manda richiesta di modifica</p>
           )}
         </button>
         <div>{message}</div>
       </form>
     </div>
   );
+}
+
+PatternForm.propTypes = {
+  sendPattern: PropTypes.func.isRequired,
+  message: PropTypes.string.isRequired,
+  singlePattern: PropTypes.object,
+  stato: PropTypes.string.isRequired,
 }

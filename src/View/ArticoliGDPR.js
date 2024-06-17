@@ -4,7 +4,7 @@ import { links } from '../Model/LinkArticoliGDPR'
 export default function ArticoliGDPR() {
   return (
     <div>
-      {links && links.map((linkItem, index) => (
+      {links?.map((linkItem, index) => (
         <h3 key={index}>
           <a className='link-articolo'
              target='_blank'

@@ -1,4 +1,5 @@
-import React from 'react'
+import React from 'react';
+import { PropTypes } from 'prop-types';
 
 export default function PatternSingolo({id, pattern, esempi}) {
   return (
@@ -93,11 +94,17 @@ export default function PatternSingolo({id, pattern, esempi}) {
         <strong>Eventuali esempi:</strong>
         <ul>
           {esempi.map(element => (
-            <li>{element}</li>
+            <li key={element}>{element}</li>
           ))}
         </ul>
       </div>
 
     </div>
   )
+}
+
+PatternSingolo.propTypes = {
+  id: PropTypes.number.isRequired,
+  pattern: PropTypes.object.isRequired,
+  esempi: PropTypes.array.isRequired
 }

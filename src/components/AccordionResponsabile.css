@@ -1,5 +1,4 @@
 .accordion-parent {
-  width: 100%;
   border-radius: 3px;
   background-color: white;
   box-shadow: 0 1px 2px #00000033;
@@ -132,6 +131,10 @@
   margin-right: 20px;
 }
 
+.accordion-parent {
+  width: 100%;
+}
+
 .pattern-form-container {
   display: flex;
   justify-content: center; /* Centra il pattern form orizzontalmente */
@@ -183,8 +186,120 @@ button.richiesta-button:hover {
   margin-bottom: 10px;
 }
 
-.pattern-form input,
+
+/* Stile per il contenitore principale */
+.pattern-form-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-right: 300px;
+}
+
+/* Stile per l'intestazione */
+.pattern-form-container h1 {
+  font-size: 2em;
+  color: #4a4a4a;
+  margin-bottom: 20px;
+}
+
+/* Stile per il contenitore del selettore e del pulsante */
+.pattern-select-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Stile per il selettore */
+.pattern-select {
+  padding: 10px;
+  border-radius: 20px;
+  border: 1px solid #ccc;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  font-size: 1em;
+  color: #333;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.pattern-select:focus {
+  border-color: #8e2ad6;
+  box-shadow: 0 0 10px rgba(142, 42, 214, 0.5);
+  outline: none;
+}
+
+/* Stile per il pulsante di eliminazione */
+button.richiesta-button {
+  padding: 10px 20px; 
+  border-radius: 20px;
+  border: none;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+  font-size: 1em;
+  color: white;
+  background-color: #8e2ad6;
+  transition: background-color 0.3s, color 0.3s, transform 0.3s;
+}
+
+button.richiesta-button:hover {
+  background-color: #621f92;
+  color: #f1f1f1;
+  cursor: pointer;
+  transform: scale(1.1);
+}
+
+/* Stile per il messaggio */
+.message {
+  margin-top: 20px;
+  font-size: 1em;
+  color: #e74c3c;
+}
+
+/* Stile per il popup di conferma */
+.confirmation-popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+  background-color: white;
+  z-index: 1000;
+  text-align: center;
+}
+
+.confirmation-popup p {
+  margin-bottom: 20px;
+  font-size: 1.2em;
+}
+
+.confirmation-popup button {
+  margin: 5px;
+  padding: 10px 20px;
+  border-radius: 20px;
+  border: none;
+  font-size: 1em;
+  color: white;
+  background-color: #8e2ad6;
+  transition: background-color 0.3s, color 0.3s, transform 0.3s;
+}
+
+.confirmation-popup button:hover {
+  background-color: #621f92;
+  color: #f1f1f1;
+  cursor: pointer;
+  transform: scale(1.1);
+}
+
+.pattern-form input {
+  margin-bottom: 15px;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 1em;
+}
+
 .pattern-form textarea {
+  height: 150px;
+  width: 400px;
   margin-bottom: 15px;
   padding: 10px;
   border-radius: 5px;

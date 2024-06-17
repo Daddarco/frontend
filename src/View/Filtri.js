@@ -4,11 +4,8 @@ import useFetch from '../hooks/useFetch';
 import { getCampiUnici, parseCampi } from '../helpers';
 
 export default function Filtri() {
-  // TODO: aggiungi pagination
-  const { data, loading, error } = useFetch('http://localhost:1337/api/patterns?populate=*');
+  const { data, loading, error } = useFetch('http://localhost:1337/api/patterns?pagination[pageSize]=100&populate=*');
   const [uniqueFields, setUniqueFields] = useState([]);
-
-  //console.log(data);
 
   useEffect(() => {
     if (data) {
@@ -16,7 +13,6 @@ export default function Filtri() {
       const parsedArray = parseCampi(fields);
 
       setUniqueFields(parsedArray);
-    //console.log(parsedArray)
     }
   }, [data]);
 

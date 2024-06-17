@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 import RegisterForm from '../View/RegisterForm';
 
 const RegistraResponsabile = () => {
@@ -21,20 +21,18 @@ const RegistraResponsabile = () => {
     const req = await fetch('http://localhost:1337/api/auth/local/register', reqRegisterOptions);
     const res = await req.json();
 
-    // gestione errori
     if (res.error) {
       setMessage(res.error.message);
-      return;
-    }
-
-    if (res.jwt && res.user) {
+    } else if (res.jwt && res.user) {
       setMessage('Utente registrato con successo');
+      // Resetta il form
+      event.target.reset();
     }
   };
 
   return (
     <RegisterForm message={message} register={register} />
-  )
-}
+  );
+};
 
 export default RegistraResponsabile;

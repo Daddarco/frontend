@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import './Accordion.css';
 import PatternList from '../View/PatternList';
 import { getPatterns } from '../Model/Query';
+import { PropTypes } from 'prop-types';
 
 const Accordion = ({ items, keepOthersOpen }) => {
   const [accordionItems, setAccordionItems] = useState(null);
@@ -67,9 +68,6 @@ const Accordion = ({ items, keepOthersOpen }) => {
     }));
   };
 
-  //console.log('accordionItems:', accordionItems);
-  //console.log('filtri:', filtri);
-
   return (
     <div className='container'>
       <div className='side-menu'>
@@ -117,3 +115,8 @@ const Accordion = ({ items, keepOthersOpen }) => {
 };
 
 export default Accordion;
+
+Accordion.propTypes = {
+  items: PropTypes.array.isRequired,
+  keepOthersOpen: PropTypes.bool.isRequired
+}

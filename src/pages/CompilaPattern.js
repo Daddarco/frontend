@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import PatternForm from '../View/PatternForm';
 import { userData } from '../helpers';
+import PropTypes from 'prop-types';
 
 function formatBody(formData, filtri, userId, stato, idPatternAssociato) {
   const jsonData = Object.fromEntries(formData);
@@ -35,10 +36,11 @@ function formatBody(formData, filtri, userId, stato, idPatternAssociato) {
   return body;
 }
 
-async function handlePost(event, formData, filtri, userId, stato, jwt, singlePatternId, setMessage) {
+async function handlePost(event, patternData, setMessage) {
   event.preventDefault();
   setMessage(null);
 
+  const { formData, filtri, userId, stato, jwt, singlePatternId } = patternData;
   const body = formatBody(formData, filtri, userId, stato, singlePatternId);
 
   const reqLoginOptions = {
@@ -71,7 +73,15 @@ export default function CompilaPattern({ filtri, singlePattern, stato }) {
   const sendPattern = async (event) => {
     if (window.confirm('Sei sicuro di voler inviare il pattern?')) {
       const formData = new FormData(event.target);
-      await handlePost(event, formData, filtri, userId, stato, jwt, singlePattern?.id, setMessage);
+      const patternData = {
+        formData,
+        filtri,
+        userId,
+        stato,
+        jwt,
+        singlePatternId: singlePattern?.id
+      };
+      await handlePost(event, patternData, setMessage);
     }
   };
 
@@ -81,3 +91,9 @@ export default function CompilaPattern({ filtri, singlePattern, stato }) {
     </div>
   );
 }
+
+CompilaPattern.propTypes = {
+  filtri: PropTypes.array.isRequired,
+  singlePattern: PropTypes.object.isRequired,
+  stato: PropTypes.string.isRequired
+};

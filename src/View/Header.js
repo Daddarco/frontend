@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { PropTypes } from 'prop-types';
 
 export default function Header({isAuth, role}) {
   return (
@@ -29,4 +30,9 @@ export default function Header({isAuth, role}) {
       </div>
     </header>
   )
+}
+
+Header.propTypes = {
+  isAuth: PropTypes.bool.isRequired,
+  role: PropTypes.string.isRequired
 }
