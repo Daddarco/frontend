@@ -21,12 +21,13 @@ export default function EliminaResponsabile() {
     fetchResponsabili();
   }, []);
 
-  //console.log(responsabili);
-  //console.log(selectedResponsabile);
-
   const handleDelete = async () => {
     if (!selectedResponsabile) {
       setMessage('Seleziona un responsabile da eliminare');
+      return;
+    }
+
+    if (!window.confirm('Sicuro di voler eliminare questo responsabile?')) {
       return;
     }
 
