@@ -3,35 +3,35 @@ import './AccordionResponsabile.css';
 import CompilaPattern from '../pages/CompilaPattern';
 
 const AccordionResponsabile = ({ items, singlePattern, keepOthersOpen }) => {
-  const [accordionItems, setAccordionItems] = useState(null);
+  const [accordionItems, setAccordionItems] = useState([]);
   const [filtri, setFiltri] = useState([]);
 
+  // Initialize accordion items when items prop changes
   useEffect(() => {
     if (items) {
-      setAccordionItems(items.map(item => ({
+      const newAccordionItems = items.map(item => ({
         ...item,
         toggled: false,
-        checkedItems: new Array(item.campi.length).fill(false) // Inizializza lo stato delle checkbox
-      })));
+        checkedItems: new Array(item.campi.length).fill(false)
+      }));
+      setAccordionItems(newAccordionItems);
     }
   }, [items]);
 
+  // Update checked items based on singlePattern
   useEffect(() => {
-    if (singlePattern && accordionItems) {
+    if (singlePattern && singlePattern.attributes && accordionItems.length > 0) {
       const singlePatternFields = {};
 
-      // Estrai i campi dal singlePattern
-      Object.keys(singlePattern.data.attributes).forEach(key => {
-        if (Array.isArray(singlePattern.data.attributes[key]?.data)) {
-          singlePatternFields[key] = singlePattern.data.attributes[key].data.map(item => item.id);
+      Object.keys(singlePattern.attributes).forEach(key => {
+        if (Array.isArray(singlePattern.attributes[key]?.data)) {
+          singlePatternFields[key] = singlePattern.attributes[key].data.map(item => item.id);
         }
       });
 
       const updatedAccordionItems = accordionItems.map(item => {
         const checkedItems = item.id_campi.map(id_campo => {
-          // Controlla se l'id_campo è presente nel singlePattern
-          const isChecked = singlePatternFields[item.label]?.includes(id_campo) || false;
-          return isChecked;
+          return singlePatternFields[item.label]?.includes(id_campo) || false;
         });
 
         return {
@@ -45,65 +45,57 @@ const AccordionResponsabile = ({ items, singlePattern, keepOthersOpen }) => {
   }, [singlePattern]);
 
   const handleAccordionToggle = (clickedItem) => {
-    setAccordionItems(accordionItems.map((item) => {
-      let toggled = item.toggled;
-
-      if (clickedItem.id === item.id) {
-        toggled = !item.toggled;
-      } else if (!keepOthersOpen) {
-        toggled = false;
-      }
-
-      return {
+    setAccordionItems(prevItems =>
+      prevItems.map(item => ({
         ...item,
-        toggled
-      };
-    }));
+        toggled: item.id === clickedItem.id ? !item.toggled : (keepOthersOpen ? item.toggled : false)
+      }))
+    );
   };
 
   const handleCheckboxChange = (itemId, index) => {
-    setAccordionItems(accordionItems.map((item) => {
-      if (item.id === itemId) {
-        const checkedItems = [...item.checkedItems];
-        checkedItems[index] = !checkedItems[index];
+    setAccordionItems(prevItems =>
+      prevItems.map(item => {
+        if (item.id === itemId) {
+          const checkedItems = [...item.checkedItems];
+          checkedItems[index] = !checkedItems[index];
 
-        // Aggiorna i filtri
-        const updatedFiltri = filtri.filter(filtro => filtro.label !== item.label);
-        const selectedFields = checkedItems.reduce((acc, isChecked, i) => {
-          if (isChecked) {
-            acc.push({
-              campo: item.campi[i],
-              id_campo: item.id_campi[i]
+          // Update filtri state
+          const updatedFiltri = filtri.filter(filtro => filtro.label !== item.label);
+          const selectedFields = checkedItems.reduce((acc, isChecked, i) => {
+            if (isChecked) {
+              acc.push({
+                campo: item.campi[i],
+                id_campo: item.id_campi[i]
+              });
+            }
+            return acc;
+          }, []);
+
+          if (selectedFields.length > 0) {
+            updatedFiltri.push({
+              label: item.label,
+              checkedItems: selectedFields
             });
           }
-          return acc;
-        }, []);
 
-        if (selectedFields.length > 0) {
-          updatedFiltri.push({
-            label: item.label,
-            checkedItems: selectedFields
-          });
+          setFiltri(updatedFiltri);
+
+          return {
+            ...item,
+            checkedItems
+          };
         }
-
-        setFiltri(updatedFiltri);
-
-        return {
-          ...item,
-          checkedItems
-        };
-      }
-      return item;
-    }));
+        return item;
+      })
+    );
   };
-
-  //console.log(filtri);
 
   return (
     <div className='container'>
       <div className='side-menu'>
         <div className='accordion-parent'>
-          {accordionItems?.map((listItem, key) => (
+          {accordionItems.map((listItem, key) => (
             <div className={`accordion ${listItem.toggled ? 'toggled' : ''}`} key={key}>
               <button className='toggle' onClick={() => handleAccordionToggle(listItem)}>
                 <p>{listItem.label}</p>
@@ -138,7 +130,7 @@ const AccordionResponsabile = ({ items, singlePattern, keepOthersOpen }) => {
         </div>
       </div>
       <div className='pattern-form-container'>
-        <CompilaPattern filtri={filtri} singlePattern={singlePattern}/>
+        <CompilaPattern filtri={filtri} singlePattern={singlePattern} />
       </div>
     </div>
   );

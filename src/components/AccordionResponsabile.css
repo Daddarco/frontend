@@ -1,4 +1,5 @@
 .accordion-parent {
+  width: 100%;
   border-radius: 3px;
   background-color: white;
   box-shadow: 0 1px 2px #00000033;
@@ -129,10 +130,6 @@
 .side-menu {
   flex: 1;
   margin-right: 20px;
-}
-
-.accordion-parent {
-  width: 100%;
 }
 
 .pattern-form-container {
